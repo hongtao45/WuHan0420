@@ -1,1 +1,2 @@
-netconvert --osm-files map.osm --output-file map.net.xml 
+netconvert --osm-files map.osm --output-file map.net.xml
+polyconvert -n map.net.xml --osm-files map.osm -o map.poi.xml
