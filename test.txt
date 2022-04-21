@@ -1,0 +1,1 @@
+netconvert --osm-files map.osm --output-file map.net.xml 
