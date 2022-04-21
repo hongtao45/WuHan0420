@@ -1,3 +1,9 @@
+# 生成路网
 netconvert --osm-files map.osm --output-file map.net.xml 
 netconvert --osm-files map.osm --output-file map.net.xml --ramps.guess True
+
+# 生成POI文件
 polyconvert -n map.net.xml --osm-files map.osm -o map.poi.xml
+
+# 生成 sumocfg文件
+sumo -n map.net.xml -r map.rou.xml -a map.poi.xml -C map.sumocfg -b 0 -e 3600 --step-length 1 --ignore-route-errors --no-warnings
