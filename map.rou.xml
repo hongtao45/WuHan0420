@@ -1,4 +1,46 @@
-<routes>
+<?xml version="1.0" encoding="UTF-8"?>
 
+<!-- generated on 04/22/22 22:06:57 by Eclipse SUMO netedit Version 1.8.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
+    <input>
+        <sumo-net-file value="C:\Users\hongtao45\Desktop\WuHan-0420\map.net.xml"/>
+    </input>
+
+    <output>
+        <output-file value="C:\Users\hongtao45\Desktop\WuHan-0420\map.net.xml"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="false"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.5"/>
+        <rectangular-lane-cut value="false"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="false"/>
+    </pedestrian>
+
+    <netedit>
+        <route-files value="C:\Users\hongtao45\Desktop\WuHan-0420\map.rou.xml"/>
+    </netedit>
+
+    <report>
+        <aggregate-warnings value="5"/>
+    </report>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <flow id="flow_0" begin="0.00" from="331158296#1" to="331159373#1" via="331159373#0.23" end="3600.00" number="1800"/>
+    <flow id="flow_1" begin="0.00" from="331159364#2.526" to="826096563#0" via="331158298.105" end="3600.00" number="1800"/>
 </routes>
