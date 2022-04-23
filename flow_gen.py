@@ -5,28 +5,46 @@ import xml.etree.ElementTree as ET
 import pandas as pd
 import numpy as np
 
+import optparse
 import subprocess
 import traci
 import sumolib
+import sys
+
+def get_options(args=None):
+    optParser = optparse.OptionParser()
+    optParser.add_option("-p", "--peak", dest="peak", default='zao',
+                         help="指定运行早晚高峰的哪一个代码")
+    optParser.add_option('-a', '--auto-sim', dest='autoSim', default=True,
+                         help="是否直接运行sumo-gui")
+
+    (options, args) = optParser.parse_args(args=args)
+    return options
+
 
 def get_dir(in_dir):
     '''
-    in_dir : 进口方向
-    L_S_R_dir: 左、直、右
+    input:
+        in_dir : 进口方向
+    output:
+        LSR_dir: 进口方向的三个转向方向：[左、直、右]
     '''
     if in_dir == '北':
-        L_S_R_dir = ['东', '南', '西']
+        LSR_dir = ['东', '南', '西']
     elif in_dir == '东':
-        L_S_R_dir = ['南', '西', '北']
+        LSR_dir = ['南', '西', '北']
     elif in_dir == '南':
-        L_S_R_dir = ['西', '北', '东']
+        LSR_dir = ['西', '北', '东']
     else:
-        L_S_R_dir = ['北', '东', '南']
+        LSR_dir = ['北', '东', '南']
 
-    return L_S_R_dir
+    return LSR_dir
 
 
 def get_flow_ID(inbound, outbound, index):
+    '''
+    根据进口道和出口到方向,生成flow 的id
+    '''
     hans = inbound + outbound
     tmp = pinyin(hans, style=Style.NORMAL, heteronym=False, errors='default', strict=True)
     res = tmp[0][0] + '_' + tmp[1][0] + '_' + str(index)
@@ -36,6 +54,7 @@ def get_flow_ID(inbound, outbound, index):
 
 def pretty_xml(elem, level=0):
     '''
+    XML 文档写入文件的时候
     增加换行符
     '''
     i = "\n" + level*"\t"
@@ -54,6 +73,10 @@ def pretty_xml(elem, level=0):
 
 
 def gen_flow(data, time_range, rou_file):
+    '''
+    生成流量
+    并保存到文件中
+    '''
     root = ET.Element('routes')       # 创建节点
     tree = ET.ElementTree(root)     # 创建文档
 
@@ -109,6 +132,9 @@ def gen_flow(data, time_range, rou_file):
 
 
 def gen_view_setting():
+    '''
+    生成一个gui-setting的文件
+    '''
     view_file = 'map.view.xml'
     
     root = ET.Element('viewsettings')
@@ -127,7 +153,10 @@ def gen_view_setting():
 
 
 def start_sumo(rou_file, autoSim=True):
-
+    '''
+    生成sumocfg文件
+    自动打开运行sumo-gui
+    '''
     sumocfg_file = rou_file.split(sep='.')[0] + '.sumocfg'
     sumo = sumolib.checkBinary('sumo')
     opts = [sumo,
@@ -176,8 +205,18 @@ if __name__=='__main__':
     gen_flow(data, wan_time, wan_rou_file)
 
     gen_view_setting()
-    
-    rou_file = zao_rou_file
-    rou_file = wan_rou_file
 
-    start_sumo(rou_file, autoSim=True)
+    zao_args = ['-p','zao','-a','true'] 
+    wan_args = ['-p','wan','-a','true'] #! 需要展示早高峰时，注释掉这一行
+
+    options = get_options(zao_args)
+    # options = get_options(wan_args)
+
+    
+    autoSim = options.autoSim
+    if 'zao' in options.peak: # 运行早高峰的仿真
+        start_sumo(zao_rou_file, autoSim)
+    elif 'wan' in options.peak:
+        start_sumo(wan_rou_file, autoSim)
+    else:
+       sys.exit(1)
