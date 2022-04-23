@@ -1,9 +1,13 @@
 
+from pypinyin import pinyin, Style
+
 import xml.etree.ElementTree as ET
 import pandas as pd
 import numpy as np
-from pypinyin import pinyin, Style
 
+import subprocess
+import traci
+import sumolib
 
 def get_dir(in_dir):
     '''
@@ -49,22 +53,23 @@ def pretty_xml(elem, level=0):
             elem.tail = i
 
 
-def generate_flow(data, time_range, rou_file):
+def gen_flow(data, time_range, rou_file):
     root = ET.Element('routes')       # 创建节点
     tree = ET.ElementTree(root)     # 创建文档
 
     for t in range(len(time_range)):
         # t = 0
-        flow_t = data.loc[data['开始时间'] == time_range[t], :] # 时间 筛选
+        flow_t = data.loc[data['开始时间']==time_range[t], :] # 时间 筛选
         flow_t.index = np.arange(len(flow_t)) # reset the index
 
         for i in range(len(flow_t)): # 四个进口道方向
-            flow_t_i = flow_t.iloc[i, :]
+            flow_t_i = flow_t.iloc[i, :] # 每方向 开始生成流量
 
             inbound = flow_t_i.loc['进口道方向']
             # print(inbound)
             LSR_dir = get_dir(inbound) # 左、直、右
             LSR_fraction = np.array([0.2, 0.5, 0.3]) # 左、直、右
+            LSR_color = ['1,0,0','0,1,0','0,0,1']
             # print(LSR_dir)
             LSR_num = flow_t_i.loc['过车流量/辆'] * LSR_fraction
             LSR_num = np.round(LSR_num).astype('int')
@@ -86,6 +91,7 @@ def generate_flow(data, time_range, rou_file):
                 to = to.iloc[0] # 有一个时数字了
                 
                 number = LSR_num[j] # number
+                col = LSR_color[j]
 
                 element.set('id', flow_ID)
                 element.set('begin', str(b))
@@ -93,31 +99,85 @@ def generate_flow(data, time_range, rou_file):
                 element.set('from', str(fr))
                 element.set('to', str(to))
                 element.set('number', str(number))
+                element.set('color', col)
 
                 # element.text = ' '
                 root.append(element)
                 
-
     pretty_xml(root)          # 增加换行符
     tree.write(rou_file, encoding='utf-8', xml_declaration=True)
 
 
+def gen_view_setting():
+    view_file = 'map.view.xml'
+    
+    root = ET.Element('viewsettings')
+    tree = ET.ElementTree(root)
+
+    element = ET.Element('scheme')
+    element.set('name',"real world" )
+    root.append(element)
+
+    element = ET.Element('delay')
+    element.set('value', '50')
+    root.append(element)
+
+    pretty_xml(root)
+    tree.write(view_file, encoding='utf-8', xml_declaration=True)
+
+
+def start_sumo(rou_file, autoSim=True):
+
+    sumocfg_file = rou_file.split(sep='.')[0] + '.sumocfg'
+    sumo = sumolib.checkBinary('sumo')
+    opts = [sumo,
+            "-n", 'map.net.xml', 
+            "-r",  rou_file,
+            '--gui-settings-file','map.view.xml',
+            "-e", "7200",
+            "--step-length", "1",
+            "--save-configuration", sumocfg_file,
+            "--threads", "2",
+            "--no-warnings", "true",
+            "--start", 'true',
+            "--duration-log.statistics",
+            "--device.rerouting.adaptation-interval", "10",
+            "--device.rerouting.adaptation-steps", "18",
+            "-v", "--no-step-log",  
+            "--ignore-route-errors", "true",
+            "--collision.action", "none",]
+    subprocess.call(opts)
+
+
+    if autoSim: # GUI-界面打开sumo-gui运行
+        sm = sumolib.checkBinary('sumo-gui')
+        
+        traci.start([sm, '-c', sumocfg_file])
+        while traci.simulation.getMinExpectedNumber() > 0:
+            traci.simulationStep()
+
+        traci.close()
+
 
 if __name__=='__main__':
 
-    filename = '竹叶山流量-0420.xlsx'
+    filename = '竹叶山流量-0418.xlsx'
     raw_data = pd.read_excel(filename, sheet_name='summary')
 
     data = raw_data.copy()
 
-    zao_time =data.loc[0:7, '开始时间']
-    wan_time = data.loc[8:15, '开始时间']
-    wan_time.index = np.arange(len(wan_time)) # 随时随地注意 index
+    zao_time =data.loc[0:7, '开始时间'].reset_index(drop=True)
+    wan_time = data.loc[8:15, '开始时间'].reset_index(drop=True)
 
     zao_rou_file = 'map_zao.rou.xml'
     wan_rou_file = 'map_wan.rou.xml'
 
-    generate_flow(data, zao_time, zao_rou_file)
-    generate_flow(data, wan_time, wan_rou_file)
+    gen_flow(data, zao_time, zao_rou_file)
+    gen_flow(data, wan_time, wan_rou_file)
 
+    gen_view_setting()
+    
+    rou_file = zao_rou_file
+    rou_file = wan_rou_file
 
+    start_sumo(rou_file, autoSim=True)
