@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 04/22/22 22:06:57 by Eclipse SUMO netedit Version 1.8.0
+<!-- generated on 04/25/22 18:10:25 by Eclipse SUMO netedit Version 1.8.0
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
 
     <input>
@@ -43,4 +43,5 @@
 <routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
     <flow id="flow_0" begin="0.00" from="331158296#1" to="331159373#1" via="331159373#0.23" end="3600.00" number="1800"/>
     <flow id="flow_1" begin="0.00" from="331159364#2.526" to="826096563#0" via="331158298.105" end="3600.00" number="1800"/>
+    <flow id="flow_2" begin="0.00" departLane="random" from="897570587" to="27318402#0.62" end="3600.00" number="1800"/>
 </routes>
