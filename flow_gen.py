@@ -15,7 +15,7 @@ def get_options(args=None):
     optParser = optparse.OptionParser()
     optParser.add_option("-p", "--peak", dest="peak", default='zao',
                          help="指定运行早晚高峰的哪一个代码")
-    optParser.add_option('-a', '--auto-sim', dest='autoSim', default=True,
+    optParser.add_option('-a', '--auto-sim', dest='autoSim', default=True, action="store_false",
                          help="是否直接运行sumo-gui")
 
     (options, args) = optParser.parse_args(args=args)
@@ -162,6 +162,7 @@ def start_sumo(rou_file, autoSim=True):
     opts = [sumo,
             "-n", 'map.net.xml', 
             "-r",  rou_file,
+            "-a", "map.poi.xml",
             '--gui-settings-file','map.view.xml',
             "-e", "7200",
             "--step-length", "1",
@@ -211,7 +212,7 @@ if __name__=='__main__':
 
     options = get_options(zao_args)
     # options = get_options(wan_args)
-
+    options = get_options()
     
     autoSim = options.autoSim
     if 'zao' in options.peak: # 运行早高峰的仿真
