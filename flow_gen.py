@@ -165,7 +165,7 @@ def start_sumo(rou_file, autoSim=True):
     opts = [sumo,
             "-n", 'map.net.xml', 
             "-r",  rou_file,
-            "-a", "map.poi.xml",
+            "-a", "map.add.xml",
             '--gui-settings-file','map.view.xml',
             "-e", "7200",
             "--step-length", "1",
@@ -213,8 +213,8 @@ if __name__=='__main__':
     zao_args = ['-p','zao','-a','true'] 
     wan_args = ['-p','wan','-a','true'] 
     
-    # options = get_options()
-    options = get_options(zao_args) 
+    options = get_options()
+    # options = get_options(zao_args) 
     # options = get_options(wan_args)  #! 需要展示晚高峰时，注释掉这一行
    
     
