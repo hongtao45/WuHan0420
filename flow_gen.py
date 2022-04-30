@@ -15,8 +15,8 @@ import sys
 def get_options(args=None):
     optParser = optparse.OptionParser()
     optParser.add_option("-p", "--peak", dest="peak", default='zao',
-                         help="指定运行早晚高峰的哪一个代码: zao or wan")
-    optParser.add_option('-a', '--auto-sim', dest='autoSim', default=True, action='store_false',
+                         help="指定运行早晚高峰的哪一个代码")
+    optParser.add_option('-a', '--auto-sim', dest='autoSim', default=True, action="store_false",
                          help="是否直接运行sumo-gui")
 
     (options, args) = optParser.parse_args(args=args)
@@ -28,16 +28,16 @@ def get_dir(in_dir):
     input:
         in_dir : 进口方向
     output:
-        LSR_dir: 进口方向的三个转向方向：[左、直、右]
+        LSR_dir: 进口方向的三个转向方向：[左、直、右、掉头]
     '''
     if in_dir == '北':
-        LSR_dir = ['东', '南', '西']
+        LSR_dir = ['东', '南', '西', '北']
     elif in_dir == '东':
-        LSR_dir = ['南', '西', '北']
+        LSR_dir = ['南', '西', '北', '东']
     elif in_dir == '南':
-        LSR_dir = ['西', '北', '东']
+        LSR_dir = ['西', '北', '东', '南']
     else:
-        LSR_dir = ['北', '东', '南']
+        LSR_dir = ['北', '东', '南', '西']
 
     return LSR_dir
 
@@ -85,15 +85,16 @@ def gen_flow(data, time_range, rou_file):
         # t = 0
         flow_t = data.loc[data['开始时间']==time_range[t], :] # 时间 筛选
         flow_t.index = np.arange(len(flow_t)) # reset the index
+        # flow_t = data.loc[data['开始时间']==time_range[t], :].reset_index(drop= True)
 
         for i in range(len(flow_t)): # 四个进口道方向
             flow_t_i = flow_t.iloc[i, :] # 每方向 开始生成流量
 
             inbound = flow_t_i.loc['进口道方向']
             # print(inbound)
-            LSR_dir = get_dir(inbound) # 左、直、右
-            LSR_fraction = np.array([0.2, 0.5, 0.3]) # 左、直、右
-            LSR_color = ['1,0,0','0,1,0','0,0,1']
+            LSR_dir = get_dir(inbound) # 左、直、右、掉头
+            LSR_fraction = np.array([0.2, 0.5, 0.3, 0.05]) # 左、直、右、掉头
+            LSR_color = ['1,0,0', '0,1,0', '0,0,1', '1,0,0']
             # print(LSR_dir)
             LSR_num = flow_t_i.loc['过车流量/辆'] * LSR_fraction
             LSR_num = np.round(LSR_num).astype('int')
@@ -164,7 +165,7 @@ def start_sumo(rou_file, autoSim=True):
     opts = [sumo,
             "-n", 'map.net.xml', 
             "-r",  rou_file,
-            "-a", "map.add.xml",
+            "-a", "map.poi.xml",
             '--gui-settings-file','map.view.xml',
             "-e", "7200",
             "--step-length", "1",
@@ -210,11 +211,12 @@ if __name__=='__main__':
     gen_view_setting()
 
     zao_args = ['-p','zao','-a','true'] 
-    wan_args = ['-p','wan','-a','true'] #! 需要展示早高峰时，注释掉这一行
-
-    # options = get_options(zao_args)
-    # options = get_options(wan_args)
-    options = get_options()
+    wan_args = ['-p','wan','-a','true'] 
+    
+    # options = get_options()
+    options = get_options(zao_args) 
+    # options = get_options(wan_args)  #! 需要展示晚高峰时，注释掉这一行
+   
     
     autoSim = options.autoSim
     if 'zao' in options.peak: # 运行早高峰的仿真
