@@ -1,6 +1,10 @@
 <?xml version='1.0' encoding='utf-8'?>
+
 <viewsettings>
 	<scheme name="real world" />
 	<delay value="50" />
 	<viewport angle="0" x="16165.49" y="14642.71" zoom="3400.39" />
+	
+	<decal file="target.png" centerX="15879.70" centerY="14651.10" centerZ="0.00" width="5281.50" height="2421.30" altitude="0.00" rotation="0.00" tilt="0.00" roll="0.00" layer="0.00" screenRelative="0"/>
+
 </viewsettings>
