@@ -1,14 +1,3 @@
 <routes>
-	<flow begin="0" color="1,0,0" end="900" from="331159364#2.526" id="dong_nan_0" number="65" to="897570588" />
-	<flow begin="0" color="0,1,0" end="900" from="331159364#2.526" id="dong_xi_0" number="162" to="331159373#1" />
-	<flow begin="0" color="0,0,1" end="900" from="331159364#2.526" id="dong_bei_0" number="97" to="27318402#1" />
-	<flow begin="0" color="1,0,0" end="900" from="331158296#1" id="xi_bei_0" number="12" to="27318402#1" />
-	<flow begin="0" color="0,1,0" end="900" from="331158296#1" id="xi_dong_0" number="31" to="826096563#0" />
-	<flow begin="0" color="0,0,1" end="900" from="331158296#1" id="xi_nan_0" number="19" to="897570588" />
-	<flow begin="0" color="1,0,0" end="900" from="826105809#13" id="nan_xi_0" number="38" to="331159373#1" />
-	<flow begin="0" color="0,1,0" end="900" from="826105809#13" id="nan_bei_0" number="96" to="27318402#1" />
-	<flow begin="0" color="0,0,1" end="900" from="826105809#13" id="nan_dong_0" number="57" to="826096563#0" />
-	<flow begin="0" color="1,0,0" end="900" from="897570589" id="bei_dong_0" number="32" to="826096563#0" />
-	<flow begin="0" color="0,1,0" end="900" from="897570589" id="bei_nan_0" number="81" to="897570588" />
-	<flow begin="0" color="0,0,1" end="900" from="897570589" id="bei_xi_0" number="49" to="331159373#1" />
+
 </routes>

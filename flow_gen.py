@@ -1,5 +1,4 @@
 
-
 from pypinyin import pinyin, Style
 
 import xml.etree.ElementTree as ET
@@ -17,8 +16,9 @@ def get_options(args=None):
     optParser.add_option("-p", "--peak", dest="peak", default='zao',
                          help="指定运行早晚高峰的哪一个代码")
     optParser.add_option('-a', '--auto-sim', dest='autoSim', default=True, action="store_false",
-                         help="是否直接运行sumo-gui")
-
+                         help="是否直接打开sumo-gui")
+    optParser.add_option("-c", "--sumocfg", dest="sumocfg", default=False, action="store_true",
+                          help="是否生成新的sumocfg文件")
     (options, args) = optParser.parse_args(args=args)
     return options
 
@@ -151,35 +151,49 @@ def gen_view_setting():
     element.set('value', '50')
     root.append(element)
 
+    element = ET.SubElement(root, 'viewport')
+    # element = ET.Element('viewport')
+    element.set('zoom','3400.39')
+    element.set('x','16165.49')
+    element.set('y','14642.71')
+    element.set('angle','0')
+    # root.append(element)
+
     pretty_xml(root)
     tree.write(view_file, encoding='utf-8', xml_declaration=True)
 
 
-def start_sumo(rou_file, autoSim=True):
+def start_sumo(rou_file, options):
     '''
     生成sumocfg文件
     自动打开运行sumo-gui
     '''
+    autoSim = options.autoSim
+    sumocfg = options.sumocfg
+    
     sumocfg_file = rou_file.split(sep='.')[0] + '.sumocfg'
-    sumo = sumolib.checkBinary('sumo')
-    opts = [sumo,
-            "-n", 'map.net.xml', 
-            "-r",  rou_file,
-            "-a", "map.add.xml",
-            '--gui-settings-file','map.view.xml',
-            "-e", "7200",
-            "--step-length", "1",
-            "--save-configuration", sumocfg_file,
-            "--threads", "2",
-            "--no-warnings", "true",
-            "--start", 'true',
-            "--duration-log.statistics",
-            "--device.rerouting.adaptation-interval", "10",
-            "--device.rerouting.adaptation-steps", "18",
-            "-v", "--no-step-log",  
-            "--ignore-route-errors", "true",
-            "--collision.action", "none",]
-    subprocess.call(opts)
+    
+    if sumocfg:
+        
+        sumo = sumolib.checkBinary('sumo')
+        opts = [sumo,
+                "-n", 'map.net.xml', 
+                "-r",  ','.join([rou_file, 'map_manual.rou.xml']),
+                "-a", "map.add.xml",
+                '--gui-settings-file','map.view.xml',
+                "-e", "7200",
+                "--step-length", "1",
+                "--save-configuration", sumocfg_file,
+                "--threads", "2",
+                "--no-warnings", "true",
+                "--start", 'true',
+                "--duration-log.statistics",
+                "--device.rerouting.adaptation-interval", "10",
+                "--device.rerouting.adaptation-steps", "18",
+                "-v", "--no-step-log",  
+                "--ignore-route-errors", "true",
+                "--collision.action", "none"]
+        subprocess.call(opts)
 
 
     if autoSim: # GUI-界面打开sumo-gui运行
@@ -208,20 +222,23 @@ if __name__=='__main__':
     gen_flow(data, zao_time, zao_rou_file)
     gen_flow(data, wan_time, wan_rou_file)
 
-    gen_view_setting()
+    #! 生成新的 显示界面的配置文件
+    # gen_view_setting()
 
     zao_args = ['-p','zao','-a','true'] 
     wan_args = ['-p','wan','-a','true'] 
     
+
     options = get_options()
-    # options = get_options(zao_args) 
+    
+    #! options = get_options(zao_args) 
     # options = get_options(wan_args)  #! 需要展示晚高峰时，注释掉这一行
    
     
-    autoSim = options.autoSim
+    #! 
     if 'zao' in options.peak: # 运行早高峰的仿真
-        start_sumo(zao_rou_file, autoSim)
+        start_sumo(zao_rou_file, options)
     elif 'wan' in options.peak:
-        start_sumo(wan_rou_file, autoSim)
+        start_sumo(wan_rou_file, options)
     else:
        sys.exit(1)
