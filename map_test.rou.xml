@@ -1,3 +1,75 @@
-<routes>
+<?xml version="1.0" encoding="UTF-8"?>
 
+<!-- generated on 05/04/22 16:14:53 by Eclipse SUMO netedit Version 1.8.0
+<configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/netconvertConfiguration.xsd">
+
+    <input>
+        <sumo-net-file value="C:\Users\hongtao45\Desktop\WuHan-0420\map.net.xml"/>
+    </input>
+
+    <output>
+        <output-file value="C:\Users\hongtao45\Desktop\WuHan-0420\map.net.xml"/>
+    </output>
+
+    <processing>
+        <geometry.min-radius.fix.railways value="false"/>
+        <geometry.max-grade.fix value="false"/>
+        <offset.disable-normalization value="true"/>
+        <lefthand value="false"/>
+    </processing>
+
+    <junctions>
+        <no-turnarounds value="true"/>
+        <junctions.corner-detail value="5"/>
+        <junctions.limit-turn-speed value="5.5"/>
+        <rectangular-lane-cut value="false"/>
+    </junctions>
+
+    <pedestrian>
+        <walkingareas value="false"/>
+    </pedestrian>
+
+    <netedit>
+        <route-files value="C:\Users\hongtao45\Desktop\WuHan-0420\map_test.rou.xml"/>
+    </netedit>
+
+    <report>
+        <aggregate-warnings value="5"/>
+    </report>
+
+</configuration>
+-->
+
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/routes_file.xsd">
+    <flow id="flow_0" begin="0.00" departLane="random" from="107270959#6" to="29027962#6" end="3600.00" vehsPerHour="200.00"/>
+    <flow id="flow_1" begin="0.00" departLane="random" from="107270959#6" to="107270959#9" end="3600.00" vehsPerHour="600.00"/>
+    <flow id="flow_10" begin="0.00" departLane="random" from="456207630#6" to="456207630#11" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_11" begin="0.00" departLane="random" from="456207630#6" to="456043498#4" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_12" begin="0.00" departLane="random" from="331158296#0" to="-131361937" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_13" begin="0.00" departLane="random" from="331158296#0" to="769037328#2" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_14" begin="0.00" departLane="random" from="131361937" to="769037328#2" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_15" begin="0.00" departLane="random" from="131361937" to="826096563#1.82" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_16" begin="0.00" departLane="random" from="-607902629#1" to="-131361937" via="897570587" end="3600.00" vehsPerHour="555.04"/>
+    <flow id="flow_17" begin="0.00" departLane="random" from="331159372#0" to="826105809#13" end="3600.00" vehsPerHour="500.00"/>
+    <flow id="flow_18" begin="0.00" departLane="random" from="331159372#0" to="331159372#9" end="3600.00" vehsPerHour="500.00"/>
+    <flow id="flow_19" begin="0.00" departLane="random" from="331159372#0" to="27318402#8" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_2" begin="0.00" departLane="random" from="107270959#6" to="456207630#11" end="3600.00" vehsPerHour="400.00"/>
+    <flow id="flow_20" begin="0.00" departLane="random" from="331162256#0" to="331159364#2" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_21" begin="0.00" departLane="random" from="331162256#0" to="775228304" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_22" begin="0.00" departLane="random" from="331162256#0" to="331159372#0" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_23" begin="0.00" departLane="random" from="881465158#8" to="331159362#3" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_24" begin="0.00" departLane="random" from="881465158#8" to="331159364#2" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_25" begin="0.00" departLane="random" from="881465158#8" to="775228305" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_26" begin="0.00" departLane="random" from="331159373#3" to="331159372#0" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_27" begin="0.00" departLane="random" from="331159373#3" to="775228305" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_28" begin="0.00" departLane="random" from="331159373#3" to="331159362#3" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_29" begin="0.00" departLane="random" from="-775228305" to="331159364#2" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_3" begin="0.00" departLane="random" from="29027962#0" to="140621781#1" end="3600.00" vehsPerHour="200.00"/>
+    <flow id="flow_30" begin="0.00" departLane="random" from="-775228304" to="343227271#4" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_4" begin="0.00" departLane="random" from="29027962#0" to="29027962#6" end="3600.00" vehsPerHour="400.00"/>
+    <flow id="flow_5" begin="0.00" departLane="random" from="29027962#0" to="456043498#0" end="3600.00" vehsPerHour="200.00"/>
+    <flow id="flow_6" begin="0.00" departLane="random" from="456043498#0" to="456207630#11" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_7" begin="0.00" departLane="random" from="456043498#0" to="456043498#4" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_8" begin="0.00" departLane="random" from="456043498#0" to="29027962#6" end="3600.00" vehsPerHour="100.00"/>
+    <flow id="flow_9" begin="0.00" departLane="random" from="456207630#6" to="107270959#9" end="3600.00" vehsPerHour="300.00"/>
 </routes>

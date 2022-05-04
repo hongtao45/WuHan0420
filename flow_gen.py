@@ -14,11 +14,14 @@ import sys
 def get_options(args=None):
     optParser = optparse.OptionParser()
     optParser.add_option("-p", "--peak", dest="peak", default='zao',
-                         help="指定运行早晚高峰的哪一个代码")
-    optParser.add_option('-a', '--auto-sim', dest='autoSim', default=True, action="store_false",
-                         help="是否直接打开sumo-gui")
-    optParser.add_option("-c", "--sumocfg", dest="sumocfg", default=False, action="store_true",
-                          help="是否生成新的sumocfg文件")
+                        help="指定运行早晚高峰的哪一个代码")
+    optParser.add_option('-a', '--auto-sim', dest='autoSim', default=True, 
+                        action="store_false", help="是否直接打开sumo-gui")
+    optParser.add_option("-c", "--sumocfg", dest="sumocfg", default=False, 
+                        action="store_true", help="是否生成新的sumocfg文件")
+    optParser.add_option("-f", "--flow", dest="flow", default=False,
+                        action="store_true", help="重新生成流量")
+
     (options, args) = optParser.parse_args(args=args)
     return options
 
@@ -188,8 +191,8 @@ def start_sumo(rou_file, options):
                 "--no-warnings", "true",
                 "--start", 'true',
                 "--duration-log.statistics",
-                "--device.rerouting.adaptation-interval", "10",
-                "--device.rerouting.adaptation-steps", "18",
+                "--device.rerouting.adaptation-interval", "20",
+                "--device.rerouting.adaptation-steps", "30",
                 "-v", "--no-step-log",  
                 "--ignore-route-errors", "true",
                 "--collision.action", "none"]
@@ -208,34 +211,35 @@ def start_sumo(rou_file, options):
 
 if __name__=='__main__':
 
-    filename = '竹叶山流量-0418.xlsx'
-    raw_data = pd.read_excel(filename, sheet_name='summary')
-
-    data = raw_data.copy()
-
-    zao_time =data.loc[0:7, '开始时间'].reset_index(drop=True)
-    wan_time = data.loc[8:15, '开始时间'].reset_index(drop=True)
-
-    zao_rou_file = 'map_zao.rou.xml'
-    wan_rou_file = 'map_wan.rou.xml'
-
-    gen_flow(data, zao_time, zao_rou_file)
-    gen_flow(data, wan_time, wan_rou_file)
-
-    #! 生成新的 显示界面的配置文件
-    # gen_view_setting()
-
     zao_args = ['-p','zao','-a','true'] 
     wan_args = ['-p','wan','-a','true'] 
     
-
-    options = get_options()
-    
     #! options = get_options(zao_args) 
     # options = get_options(wan_args)  #! 需要展示晚高峰时，注释掉这一行
-   
     
-    #! 
+    options = get_options()
+    
+    filename = '竹叶山流量-0418.xlsx'
+    
+    zao_rou_file = 'map_zao.rou.xml'
+    wan_rou_file = 'map_wan.rou.xml'
+    
+    if options.flow:
+        raw_data = pd.read_excel(filename, sheet_name='summary')
+
+        data = raw_data.copy()
+
+        zao_time =data.loc[0:7, '开始时间'].reset_index(drop=True)
+        wan_time = data.loc[8:15, '开始时间'].reset_index(drop=True)
+
+
+        gen_flow(data, zao_time, zao_rou_file)
+        gen_flow(data, wan_time, wan_rou_file)
+
+    #! 生成新的 显示界面的配置文件
+    # gen_view_setting()
+    
+    #! 选择运行的时间
     if 'zao' in options.peak: # 运行早高峰的仿真
         start_sumo(zao_rou_file, options)
     elif 'wan' in options.peak:
