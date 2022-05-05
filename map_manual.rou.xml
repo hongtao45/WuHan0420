@@ -25,7 +25,7 @@
 
 <!-- 3西 -->
     <flow id="flow_13" begin="0.00" departLane="random" from="331158296#0" to="769037328#2" end="3600.00" vehsPerHour="300.00"/>
-    <flow id="flow_14" begin="0.00" departLane="random" from="131361937" to="769037328#2" end="3600.00" vehsPerHour="300.00"/>
+    <flow id="flow_14" begin="0.00" departLane="random" from="131361937" to="769037328#2" end="3600.00" vehsPerHour="100.00"/>
     <flow id="flow_15" begin="0.00" departLane="random" from="131361937" to="826096563#1.82" end="3600.00" vehsPerHour="300.00"/>
     <flow id="flow_16" begin="0.00" departLane="random" from="-607902629#1" to="-131361937" via="897570587.118" end="3600.00" vehsPerHour="200"/>
 
