@@ -184,7 +184,7 @@ def start_sumo(rou_file, options):
                 "-r",  ','.join([rou_file, 'map_manual.rou.xml']),
                 "-a", ','.join(["map.add.xml", "edgedata.add.xml"]),
                 '--gui-settings-file','map.view.xml',
-                "-e", "7200",
+                "-e", "3600",
                 "--step-length", "1",
                 "--save-configuration", sumocfg_file,
                 "--threads", "2",
