@@ -17,5 +17,10 @@ python "%SUMO_HOME%\tools\randomTrips.py" -n osm.net.xml --fringe-factor 4 -o os
 python "%SUMO_HOME%\tools\randomTrips.py" -n osm.net.xml --fringe-factor 4 -o osm22.pedestrian.trips.xml --seed 42 -e 3600 -r osm22.pedestrian.rou.xml -p 1.445465 --vehicle-class pedestrian --persontrips --prefix ped --additional-files osm_stops.add.xml,osm_pt22.rou.xml --trip-attributes "modes=\"public\""
 
 
-# CMD 下才可以运行，获取背景图
+# CMD 下才可以运行，获取背景图（Windows的风格
 python "%SUMO_HOME%\tools\tileGet.py" -n map.net.xml -t 10
+python %SUMO_HOME%/tools/tileGet.py -h
+
+# Git bash 或 terminal可以运行（Linux的风格
+python $SUMO_HOME/tools/tileGet.py -h
+python $SUMO_HOME\\tools\\tileGet.py -h
