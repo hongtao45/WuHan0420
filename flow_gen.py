@@ -182,7 +182,7 @@ def start_sumo(rou_file, options):
         opts = [sumo,
                 "-n", 'map.net.xml', 
                 "-r",  ','.join([rou_file, 'map_manual.rou.xml']),
-                "-a", "map.add.xml",
+                "-a", ','.join(["map.add.xml", "edgedata.add.xml"]),
                 '--gui-settings-file','map.view.xml',
                 "-e", "7200",
                 "--step-length", "1",

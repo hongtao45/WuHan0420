@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<!-- generated on 05/04/22 16:53:50 by Eclipse SUMO sumo Version 1.8.0
+<!-- generated on 05/05/22 11:32:29 by Eclipse SUMO sumo Version 1.8.0
 -->
 
 <configuration xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://sumo.dlr.de/xsd/sumoConfiguration.xsd">
@@ -8,7 +8,7 @@
     <input>
         <net-file value="map.net.xml"/>
         <route-files value="map_wan.rou.xml,map_manual.rou.xml"/>
-        <additional-files value="map.add.xml"/>
+        <additional-files value="map.add.xml,edgedata.add.xml"/>
     </input>
 
     <time>
