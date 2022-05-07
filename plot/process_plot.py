@@ -93,7 +93,7 @@ def plot_fig(data_be, data_af, fig_type, prefix, after_legend):
     
     plt.legend()
         
-    plt.savefig(after_legend+"-"+ fig_type.split(sep='_')[1].title() + prefix + '.png' )
+    plt.savefig(after_legend+"-"+ fig_type.split(sep='_')[1].title() + "-"+prefix + '.png' )
 
 
 def main(options, file_before, file_after):
