@@ -7,6 +7,7 @@
     <edgeData id="4min_agg"  freq="240" excludeEmpty="True" begin="0" end="1800" file="./output/edata_4min_agg.xml"  edgesFile="edges.txt" />
     <edgeData id="2min_agg"  freq="120" excludeEmpty="True" begin="0" end="1800" file="./output/edata_2min_agg.xml"  edgesFile="edges.txt" /> -->
 
+    <edgeData id="2min_agg"  freq="120" excludeEmpty="True" begin="0" end="3600" file="./output/edata_2min_agg_after.xml"  edgesFile="edges.txt" />
     <!-- <edgeData id="2min_agg_huan"  freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_huan.xml"  edgesFile="edges_huan.txt" />
     <edgeData id="2min_agg_dong"  freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_dong.xml"  edgesFile="edges_dong.txt" />
     <edgeData id="2min_agg_nan"   freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_nan.xml"  edgesFile="edges_nan.txt" />
@@ -14,9 +15,10 @@
     <edgeData id="2min_agg_bei"   freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_bei.xml"  edgesFile="edges_bei.txt" /> -->
 
 
+<!-- 
     <edgeData id="2min_agg_huan"  freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_huan.xml"  edges="331159366#1 331159366#2 331159366#3 331159366#4 331159366#5 331159366#6 331159366#7 331159366#8" />
-    <edgeData id="2min_agg_dong"  freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_dong.xml"  edges="331159364#2.1476 331159364#2.526" />
-    <!-- <edgeData id="2min_agg_nan"   freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_nan.xml"  edges="edges_nan.txt" />
+    <edgeData id="2min_agg_dong"  freq="120"  begin="0" end="3600"  file="./output/edata_2min_agg_dong.xml"  edges="331159364#2.1476" />
+    <edgeData id="2min_agg_nan"   freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_nan.xml"  edges="edges_nan.txt" />
     <edgeData id="2min_agg_xi"    freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_xi.xml"  edges="edges_xi.txt" />
     <edgeData id="2min_agg_bei"   freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_bei.xml"  edges="edges_bei.txt" /> -->
     
