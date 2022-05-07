@@ -103,7 +103,8 @@ def main(options, file_before, file_after):
         dong = ["331159364#2.1476" , "331159364#2.526"],
         nan = ["826105809#14","826105809#14.186","826105809#14.238"],
         xi = ["331158296#2", "331158296#2.100", "331158296#2.118"],
-        bei = ["897570587", "897570587.118", "897570589"]
+        bei = ["897570587", "897570587.118", "897570589"],
+        xi2 = ["331158298", "331158298.105"]
         )
     
     fig_type = options.figtype
@@ -112,6 +113,7 @@ def main(options, file_before, file_after):
                         huan="圆环",
                         dong="东进口车道",
                         xi="西进口车道",
+                        xi2 ="西出口车道",
                         nan="南进口车道",
                         bei="北进口车道"
                     )
@@ -160,15 +162,15 @@ if __name__ == '__main__':
         main(options, file_before, file_after2)
 
 
-    # #! 方案一，对比
-    # file_after = 'edata_2min_agg_after1.csv'
-    # for val in lab_dict.keys():
-    #     args = ['-s', "优化后-方案1"]
-    #     args.append('-t')
-    #     args.append(val)
+    #! 方案一，对比
+    file_after1 = 'edata_2min_agg_after1.csv'
+    for val in lab_dict.keys():
+        args = ['-s', "优化后-方案1"]
+        args.append('-t')
+        args.append(val)
         
-    #     # print(args)
+        # print(args)
 
-    #     options = get_options(args)
-    #     main(options, file_before, file_after_1)
+        options = get_options(args)
+        main(options, file_before, file_after1)
 

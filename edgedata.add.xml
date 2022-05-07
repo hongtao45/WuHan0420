@@ -7,7 +7,7 @@
     <edgeData id="4min_agg"  freq="240" excludeEmpty="True" begin="0" end="1800" file="./output/edata_4min_agg.xml"  edgesFile="edges.txt" />
     <edgeData id="2min_agg"  freq="120" excludeEmpty="True" begin="0" end="1800" file="./output/edata_2min_agg.xml"  edgesFile="edges.txt" /> -->
 
-    <edgeData id="2min_agg"  freq="120" excludeEmpty="True" begin="0" end="3600" file="./output/edata_2min_agg_after.xml"  edgesFile="edges.txt" />
+    <edgeData id="2min_agg"  freq="120" excludeEmpty="True" begin="0" end="3600" file="./output/edata_2min_agg_after2.xml"  edgesFile="edges.txt" />
     <!-- <edgeData id="2min_agg_huan"  freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_huan.xml"  edgesFile="edges_huan.txt" />
     <edgeData id="2min_agg_dong"  freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_dong.xml"  edgesFile="edges_dong.txt" />
     <edgeData id="2min_agg_nan"   freq="120"  excludeEmpty="True" begin="0" end="3600"  file="./output/edata_2min_agg_nan.xml"  edgesFile="edges_nan.txt" />
