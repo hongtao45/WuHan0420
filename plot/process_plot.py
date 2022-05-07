@@ -16,13 +16,15 @@ def get_options(args=None):
     options, args = optParser.parse_args(args=args)
     
     lab_dict = dict(
+                edge_arrived="道道车辆()",
                 edge_density= "路段密度(辆/千米)",
                 edge_laneDensity="车道密度(辆/千米/车道)", 
                 edge_occupancy="占有率(%)",
                 edge_timeLoss= "损失时间(秒)",
                 edge_speed = "平均速度(米/秒)",
                 edge_traveltime="通过时间(秒)",
-                edge_waitingTime="停车排队时间(秒)"
+                edge_waitingTime="停车排队时间(秒)",
+                edge_entered="进入车辆数(辆)"
                     )
     
     if options.figtype not in lab_dict.keys():
@@ -59,14 +61,16 @@ def plot_fig(data_be, data_af, fig_type, prefix):
     pos_prefix: 画图的标题开头的数据
     '''
     lab_dict = dict(
+                edge_arrived="道道车辆()",
                 edge_density= "路段密度(辆/千米)",
                 edge_laneDensity="车道密度(辆/千米/车道)", 
                 edge_occupancy="占有率(%)",
                 edge_timeLoss= "损失时间(秒)",
                 edge_speed = "平均速度(米/秒)",
                 edge_traveltime="通过时间(秒)",
-                edge_waitingTime="停车排队时间(秒)"
-                    )                   
+                edge_waitingTime="停车排队时间(秒)",
+                edge_entered="进入车辆数(辆)"
+                    )                  
     y_label = lab_dict[fig_type]
 
     x1 = np.array(data_be.index)
@@ -84,8 +88,9 @@ def plot_fig(data_be, data_af, fig_type, prefix):
     
     fig_title = prefix +":"+ fig_type.split(sep='_')[1].title()
     plt.title(fig_title)
-        
     
+    plt.legend()
+        
     plt.savefig("Plot"+"-"+ fig_type.split(sep='_')[1].title() + prefix + '.png' )
 
 
