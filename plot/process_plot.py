@@ -13,10 +13,12 @@ def get_options(args=None):
     optParser = optparse.OptionParser()
     optParser.add_option('-t', '--fig-type', dest='figtype',
                     default='edge_density', help="执行画什么图")
+    optParser.add_option('-s', '--scheme', dest='scheme', 
+                    default="优化后-方案2", help="优化后的方案几,用于legend")
     options, args = optParser.parse_args(args=args)
     
     lab_dict = dict(
-                edge_arrived="道道车辆()",
+                edge_arrived="到达车辆(辆)",
                 edge_density= "路段密度(辆/千米)",
                 edge_laneDensity="车道密度(辆/千米/车道)", 
                 edge_occupancy="占有率(%)",
@@ -28,7 +30,7 @@ def get_options(args=None):
                     )
     
     if options.figtype not in lab_dict.keys():
-        print("换一个类型，没有这个数据")
+        print("麻烦您换一个指标，咱们没有这个数据")
         sys.exit()
 
     return options
@@ -53,7 +55,7 @@ def data_process(filename, pos):
     return res
 
 
-def plot_fig(data_be, data_af, fig_type, prefix):
+def plot_fig(data_be, data_af, fig_type, prefix, after_legend):
     '''
     data_be: 处理好的优化 前 的数据
     data_df: 处理好的优化 后 的数据
@@ -61,7 +63,7 @@ def plot_fig(data_be, data_af, fig_type, prefix):
     pos_prefix: 画图的标题开头的数据
     '''
     lab_dict = dict(
-                edge_arrived="道道车辆()",
+                edge_arrived="到达车辆(辆)",
                 edge_density= "路段密度(辆/千米)",
                 edge_laneDensity="车道密度(辆/千米/车道)", 
                 edge_occupancy="占有率(%)",
@@ -81,9 +83,9 @@ def plot_fig(data_be, data_af, fig_type, prefix):
 
     fig = plt.figure(dpi=150)
     plt.plot(x1, y1, label='优化前', marker = 'o')
-    plt.plot(x2, y2, label='优化后', marker = 'o')
+    plt.plot(x2, y2, label=after_legend, marker = 'o')
 
-    plt.xlabel('时间(2分钟)', fontsize=12)
+    plt.xlabel('时间(每2分钟)', fontsize=12)
     plt.ylabel(y_label, fontsize=12)
     
     fig_title = prefix +":"+ fig_type.split(sep='_')[1].title()
@@ -91,12 +93,10 @@ def plot_fig(data_be, data_af, fig_type, prefix):
     
     plt.legend()
         
-    plt.savefig("Plot"+"-"+ fig_type.split(sep='_')[1].title() + prefix + '.png' )
+    plt.savefig(after_legend+"-"+ fig_type.split(sep='_')[1].title() + prefix + '.png' )
 
 
-def main(options):
-    file_before = 'edata_2min_agg_before.csv'
-    file_after = 'edata_2min_agg_after.csv'
+def main(options, file_before, file_after):
 
     edges =dict(
         huan= ["331159366#1","331159366#2","331159366#3","331159366#4","331159366#5" ,"331159366#6","331159366#7","331159366#8"],
@@ -116,18 +116,59 @@ def main(options):
                         bei="北进口车道"
                     )
         prefix = pre_dict[pre]
+
         data_be = data_process(file_before, pos)
         data_af = data_process(file_after, pos)
         
         # 打印出来，查看一下为啥报错
-        # data_be.to_excel(pre+"-"+'before'+ ".xlsx")
-        # data_af.to_excel(pre+"-"+'after'+ ".xlsx")
+        # data_be.to_excel('res'+ pre +"-"+'before'+ ".xlsx")
+        # data_af.to_excel('res'+ pre +"-"+'after'+ ".xlsx")
 
-        plot_fig(data_be, data_af, fig_type, prefix)
+        after_legend = options.scheme
+        plot_fig(data_be, data_af, fig_type, prefix, after_legend)
 
 
 if __name__ == '__main__':
 
-    options = get_options()
-    main(options)
+    # 一个流程，全部跑通
+    lab_dict = dict(
+                edge_arrived="到达车辆(辆/两分钟)",
+                edge_density= "路段密度(辆/千米)",
+                edge_laneDensity="车道密度(辆/千米/车道)", 
+                edge_occupancy="占有率(%)",
+                edge_timeLoss= "损失时间(秒)",
+                edge_speed = "平均速度(米/秒)",
+                edge_traveltime="通过时间(秒)",
+                edge_waitingTime="停车排队时间(秒)",
+                edge_entered="进入车辆数(辆)"
+                    )
+    
+
+    file_before = 'edata_2min_agg_before.csv'
+    
+    
+    #! 方案二，对比
+    file_after2 = 'edata_2min_agg_after2.csv'
+    for val in lab_dict.keys():
+        args = ['-s', "优化后-方案2"]
+        args.append('-t')
+        args.append(val)
+        
+        # print(args)
+
+        options = get_options(args)
+        main(options, file_before, file_after2)
+
+
+    # #! 方案一，对比
+    # file_after = 'edata_2min_agg_after1.csv'
+    # for val in lab_dict.keys():
+    #     args = ['-s', "优化后-方案1"]
+    #     args.append('-t')
+    #     args.append(val)
+        
+    #     # print(args)
+
+    #     options = get_options(args)
+    #     main(options, file_before, file_after_1)
 
