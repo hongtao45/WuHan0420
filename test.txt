@@ -26,4 +26,5 @@ python $SUMO_HOME/tools/tileGet.py -h
 python $SUMO_HOME\\tools\\tileGet.py -h
 
 
-python $SUMO_HOME/tools/xml/xml2csv.py edata_2min_agg.xml
+python $SUMO_HOME/tools/xml/xml2csv.py edata_2min_agg.xml 
+python $SUMO_HOME/tools/xml/xml2csv.py edata_2min_agg_after.xml -s ,
