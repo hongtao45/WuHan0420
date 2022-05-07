@@ -24,3 +24,6 @@ python %SUMO_HOME%/tools/tileGet.py -h
 # Git bash 或 terminal可以运行（Linux的风格
 python $SUMO_HOME/tools/tileGet.py -h
 python $SUMO_HOME\\tools\\tileGet.py -h
+
+
+python $SUMO_HOME/tools/xml/xml2csv.py edata_2min_agg.xml
